@@ -33,6 +33,14 @@ public class Main {
         }catch (SQLException e){
             e.printStackTrace();
         }
+        finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private static Connection getConnection() {
