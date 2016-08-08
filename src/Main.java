@@ -28,6 +28,7 @@ public class Main {
                 case "-d":
                     deleteRecord(args,connection);
                     break;
+                default:System.exit(0);
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -47,6 +48,9 @@ public class Main {
     }
 
     private static void deleteRecord(String[] args,Connection connection) {
+        if (args.length != 2){
+            return;
+        }
         try {
             PreparedStatement statement=connection.prepareStatement(deleteSQL);
             statement.setInt(1,Integer.valueOf(args[1]));
@@ -59,6 +63,9 @@ public class Main {
     }
 
     private static void updateRecord(String[] args,Connection connection) throws SQLException {
+        if (args.length != 4){
+            return;
+        }
         PreparedStatement statement=connection.prepareStatement(updateSQL);
         statement.setString(1,args[1]);
         statement.setString(2,args[2]);
@@ -67,6 +74,9 @@ public class Main {
         statement.close();
     }
     private static void readRecord(String[] args,Connection connection) throws SQLException {
+        if (args.length != 5){
+            return;
+        }
         Statement statement=connection.createStatement();
         ResultSet resultSet=statement.executeQuery(selectSQL);
         while (resultSet.next()){
@@ -81,7 +91,10 @@ public class Main {
     }
 
     private static void createRecord(String[] args,Connection connection) throws SQLException {
-            PreparedStatement preparedStatement=connection.prepareStatement(insertSQL);
+        if (args.length != 4){
+            return;
+        }
+        PreparedStatement preparedStatement=connection.prepareStatement(insertSQL);
             preparedStatement.setString(1,args[1]);
             preparedStatement.setString(2,args[2]);
             preparedStatement.setDate(3,Date.valueOf(args[3]));
